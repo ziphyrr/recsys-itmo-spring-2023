@@ -10,10 +10,11 @@ class Contextual(Recommender):
     recommendations found for the track.
     """
 
-    def __init__(self, tracks_redis, catalog):
+    def __init__(self, tracks_redis, catalog, k):
         self.tracks_redis = tracks_redis
         self.fallback = Random(tracks_redis)
         self.catalog = catalog
+        self.k = k
 
     def recommend_next(self, user: int, prev_track: int, prev_track_time: float) -> int:
         previous_track = self.tracks_redis.get(prev_track)
@@ -22,10 +23,10 @@ class Contextual(Recommender):
 
         previous_track = self.catalog.from_bytes(previous_track)
         recommendations = previous_track.recommendations
-        if not recommendations:
+        if recommendations is None:
             return self.fallback.recommend_next(user, prev_track, prev_track_time)
 
-        shuffled = list(recommendations)
+        shuffled = list(recommendations)[:self.k]
         random.shuffle(shuffled)
         return shuffled[0]
 

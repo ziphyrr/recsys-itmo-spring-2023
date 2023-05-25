@@ -15,6 +15,7 @@ class Treatment(Enum):
 
 class Split(Enum):
     HALF_HALF = 2
+    THREE_WAY = 3
     FOUR_WAY = 4
     FIVE_WAY = 5
     SEVEN_WAY = 7
@@ -65,6 +66,10 @@ class Experiments:
     PERSONALIZED = Experiment("PERSONALIZED", Split.HALF_HALF)
     CONTEXTUAL = Experiment("CONTEXTUAL", Split.HALF_HALF)
     RECOMMENDERS = Experiment("RECOMMENDERS", Split.SEVEN_WAY)
+    USER_BASED_COMP = Experiment("USER_BASED_COMP", Split.HALF_HALF)
+    CONTEXTUAL_COMP = Experiment("CONTEXTUAL_COMP", Split.FOUR_WAY)
+    CONTEXTUAL_VS_CUSTOM = Experiment("CONTEXTUAL_VS_CUSTOM", Split.FIVE_WAY)
+    CONTEXTUAL_COMP_FINAL = Experiment("CONTEXTUAL_COMP_FINAL", Split.HALF_HALF)
 
     def __init__(self):
-        self.experiments = [Experiments.RECOMMENDERS]
+        self.experiments = [Experiments.CONTEXTUAL_COMP_FINAL]
